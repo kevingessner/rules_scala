@@ -1,6 +1,7 @@
 package scripts
 
 import io.bazel.rules_scala.scrooge_support.{ Compiler, CompilerDefaults }
+import com.twitter.scrooge.backend.WithFinagle
 import io.bazel.rulesscala.jar.JarCreator
 import io.bazel.rulesscala.io_utils.DeleteRecursively
 import java.io.{ File, PrintStream }
@@ -97,6 +98,7 @@ class ScroogeGenerator extends Processor {
     scrooge.destFolder = scroogeOutput.toString
     //TODO we should make this configurable
     scrooge.strict = false
+    scrooge.flags += WithFinagle
     scrooge.run()
 
     JarCreator.buildJar(Array(jarOutput, scroogeOutput.toString))
